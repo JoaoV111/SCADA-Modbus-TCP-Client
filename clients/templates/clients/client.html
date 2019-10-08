@@ -1,0 +1,31 @@
+{% extends 'clients/base.html' %}
+
+
+    {% block head %}
+        <title>Acionamento Bombas</title>
+    {% endblock %}  
+
+    {% block body %}
+        {% for stat in clp_status %}
+            <p style="color: red; margin-bottom: 0px">{{ stat }}</p>
+        {% endfor %}
+        {% for equip in equip_list %}
+            <div class="center" style="text-align: center; margin-left: auto; margin-right: auto;">
+                <p style="margin-bottom: 0px">--------------------------------------------------</p>
+                <p style="margin-bottom: 0px">{{ equip.name }}</p>
+                <a href="{{ equip.id }}/equip_on/">
+                    <button>Ligar</button></a>
+                <a href="{{ equip.id }}/equip_off/">
+                    <button>Desligar</button></a><br><br>
+                {% if equip.status == 'Desligado' or equip.status == 'Erro' %}    
+                    <p style="color: red">{{ equip.status }}</p>
+                {% else %}
+                    <p style="color: rgb(10, 209, 10)">{{ equip.status }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endblock %}  
+
+    {% block script %}
+    {% endblock %}
+

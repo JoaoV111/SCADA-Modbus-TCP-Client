@@ -1,0 +1,40 @@
+#   A basic travis.yml boilerplate for Django projects
+#
+#   The set-up assumes a postgreSQL database.
+#
+#   Replace the following variables in the code:
+# * your_project_settings
+# * your_github_username
+# * your_repo
+
+language: python
+
+python:
+  - 3.7.3
+
+services: postgresql
+
+env:
+  - DJANGO=2.2.5
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=your_project.settings
+  - export PYTHONPATH=$HOME/builds/your_github_username/your_repo
+  - export PIP_USE_MIRRORS=true
+
+install:
+  - pip3 install -r requirements.txt
+  - pip3 install django==$DJANGO --quiet
+  - pip3 install psycopg2 --quiet
+
+before_script:
+  - psql -c "CREATE DATABASE mydb;" -U postgres
+
+script:
+  - python manage.py syncdb --noinput
+
+deploy:
+  provider: heroku
+  api-key: 
+    secure: $HEROKU_API_KEY
+  app: joao-some-api
