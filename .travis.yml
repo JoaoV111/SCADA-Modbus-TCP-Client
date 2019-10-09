@@ -27,11 +27,11 @@ install:
   - pip3 install django==$DJANGO --quiet
   - pip3 install psycopg2 --quiet
 
-before_script:
-  - psql -c "CREATE DATABASE mydb;" -U postgres
+# before_script:
+#   - psql -c "CREATE DATABASE mydb;" -U postgres
 
-script:
-  - python manage.py syncdb --noinput
+# script:
+#   - python manage.py syncdb --noinput
 
 deploy:
   provider: heroku
