@@ -126,3 +126,6 @@ if 'TRAVIS' in os.environ:
             'PORT':     '',
         }
     }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
