@@ -37,4 +37,4 @@ deploy:
   provider: heroku
   api-key: 
     secure: $HEROKU_API_KEY
-  app: joao-some-api
+  app: modbus-tcp-client
