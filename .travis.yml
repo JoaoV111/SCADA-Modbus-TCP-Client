@@ -30,7 +30,8 @@ install:
 # before_script:
 #   - psql -c "CREATE DATABASE mydb;" -U postgres
 
-script: pytest
+script:
+  - python test.py
 #   - python manage.py syncdb --noinput
 
 deploy:
