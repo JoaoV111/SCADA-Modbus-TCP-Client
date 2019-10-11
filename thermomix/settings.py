@@ -127,17 +127,17 @@ LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 
-if 'TRAVIS' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE':   'django.db.backends.postgresql_psycopg2',
-            'NAME':     'travisci',
-            'USER':     'postgres',
-            'PASSWORD': '',
-            'HOST':     'localhost',
-            'PORT':     '',
-        }
-    }
+# if 'TRAVIS' in os.environ:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE':   'django.db.backends.postgresql_psycopg2',
+#             'NAME':     'travisci',
+#             'USER':     'postgres',
+#             'PASSWORD': '',
+#             'HOST':     'localhost',
+#             'PORT':     '',
+#         }
+#     }
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
