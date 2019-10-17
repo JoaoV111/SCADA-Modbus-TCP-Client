@@ -14,14 +14,14 @@
     <div>
         <p class="p2">Selecione o cliente.</p>
     </div>
-    <div class="center" style="width: 720px">
+    <div class="center" style="width: 150px">
         {% for key, value in client_dict.items %}
             <div class="container1">
                 <a href="{{ key }}">
-                    <img src="{{ value.1.url }}" class="image1" alt="{{ value.0 }}"></a>
+                    <img src="{{ value.1.url }}" class="image1" alt="{{ value.0 }}">
                 <div class="middle1">
-                    <div class="text1">{{ value.0 }}</div>
-                </div>
+                    <div id="t1" class="text1" style="width: 150px" >{{ value.0 }}</div>
+                </div></a>
             </div>
         {% endfor %}
     </div>

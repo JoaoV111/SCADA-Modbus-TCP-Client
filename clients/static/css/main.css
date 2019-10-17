@@ -252,7 +252,7 @@ table.table1 td, tr {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
+  -ms-transform: translate(-50%, -50%);
 }
 
 .container1:hover .image1 {
@@ -271,9 +271,9 @@ table.table1 td, tr {
 .text1 {
   font-weight: bold;
   color: black;
-  padding: 16px 32px;
+  padding: 5px;
   font-family: 'Poppins', sans-serif;
-  font-size: 150%;
+  font-size: 20px;
 }
 
 .i_number{
