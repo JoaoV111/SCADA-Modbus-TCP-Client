@@ -1,6 +1,6 @@
 import os
 import django_heroku
-import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,7 +15,7 @@ SECRET_KEY = '#pxf@p!=n-a2yrb@8wqkckxn0t49y+w5(^6%&$6qwa^npvq^al'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['modbus-tcp-client.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,11 +38,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
-
-MIDDLEWARE_CLASSES = (
-    'whitenoise.middleware.WhiteNoiseMiddleware',)
-
 
 ROOT_URLCONF = 'thermomix.urls'
 
@@ -68,14 +65,12 @@ WSGI_APPLICATION = 'thermomix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'CONN_MAX_AGE': 500,
+DATABASES = {    
+    'default': {        
+        'ENGINE': 'django.db.backends.sqlite3',        
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),    
     }
 }
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -112,32 +107,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 LOGIN_REDIRECT_URL = '/clients/'
 LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
-
-# if 'TRAVIS' in os.environ:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE':   'django.db.backends.postgresql_psycopg2',
-#             'NAME':     'travisci',
-#             'USER':     'postgres',
-#             'PASSWORD': '',
-#             'HOST':     'localhost',
-#             'PORT':     '',
-#         }
-#     }
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
