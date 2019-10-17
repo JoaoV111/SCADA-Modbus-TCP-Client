@@ -20,7 +20,7 @@ def clp_view(request,client_id):
 	clp_status = []
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		for equip in equip_list:
-			connection = ModbusTcpClient(equip.clp.ip_int, equip.clp.port)
+			connection = ModbusTcpClient(equip.clp.ip_ext, equip.clp.port)
 			if connection.connect():
 				clp_status = []
 			else:
@@ -50,7 +50,7 @@ def clp_view(request,client_id):
 
 def EquipOn(request, client_id, equipamento_id):
 	equip = get_object_or_404(Equipamento, pk=equipamento_id)
-	connection = ModbusTcpClient(equip.clp.ip_int, equip.clp.port)
+	connection = ModbusTcpClient(equip.clp.ip_ext, equip.clp.port)
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		try:
 			connection.write_register(equip.end_modbus_escrita, 1)
@@ -67,7 +67,7 @@ def EquipOn(request, client_id, equipamento_id):
 
 def EquipOff(request, client_id, equipamento_id):
 	equip = get_object_or_404(Equipamento, pk=equipamento_id)
-	connection = ModbusTcpClient(equip.clp.ip_int, equip.clp.port)
+	connection = ModbusTcpClient(equip.clp.ip_ext, equip.clp.port)
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		try:
 			connection.write_register(equip.end_modbus_escrita, 0)
