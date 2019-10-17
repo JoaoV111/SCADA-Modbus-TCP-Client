@@ -15,7 +15,7 @@ class CLP(models.Model):
     ip_int = models.CharField(max_length=200)
     ip_ext = models.CharField(max_length=200)
     port = models.IntegerField(default=0)
-    clp_img = models.ImageField(upload_to = 'clp_img/', null=True)
+    clp_img = models.ImageField(upload_to = 'clp_img/', null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -28,7 +28,7 @@ class Equipamento(models.Model):
     end_modbus_leitura = models.IntegerField(default=0)
     end_modbus_escrita = models.IntegerField(default=0)
     status = models.CharField(max_length=200, null=True, blank=True)
-    equip_img = models.ImageField(upload_to = 'equip_img/', null=True)
+    equip_img = models.ImageField(upload_to = 'equip_img/', null=True, blank=True)
     def __str__(self):
         return self.name
 
