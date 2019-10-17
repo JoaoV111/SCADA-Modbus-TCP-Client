@@ -19,8 +19,11 @@ def clp_view(request,client_id):
 	equip_list = client.equipamento_set.order_by('clp')
 	clp_status = []
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
+		connection = ModbusTcpClient('0.0.0.0', 0)
 		for equip in equip_list:
-			connection = ModbusTcpClient(equip.clp.ip_ext, equip.clp.port)
+			if ModbusTcpClient(equip.clp.ip_ext, equip.clp.port) != connection:
+				is_PLC_socket_close(connection)
+				connection = ModbusTcpClient(equip.clp.ip_ext, equip.clp.port)
 			if connection.connect():
 				clp_status = []
 			else:
@@ -39,7 +42,7 @@ def clp_view(request,client_id):
 			except:
 				equip.status = 'Erro'
 				equip.save()
-			is_PLC_socket_close(connection)
+		is_PLC_socket_close(connection)
 
 	
 		return render(request, "clients/client.html", { 'equip_list': equip_list,
