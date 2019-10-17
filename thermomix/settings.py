@@ -15,7 +15,7 @@ SECRET_KEY = '#pxf@p!=n-a2yrb@8wqkckxn0t49y+w5(^6%&$6qwa^npvq^al'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['modbus-tcp-client.herokuapp.com']
+ALLOWED_HOSTS = ['modbus-tcp-client.herokuapp.com','localhost']
 
 
 # Application definition

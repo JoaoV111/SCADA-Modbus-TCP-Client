@@ -53,7 +53,7 @@ def EquipOn(request, client_id, equipamento_id):
 	connection = ModbusTcpClient(equip.clp.ip_int, equip.clp.port)
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		try:
-			conecction.write_register(equip.end_modbus_escrita, 1)
+			connection.write_register(equip.end_modbus_escrita, 1)
 			equip.status = 'Ligando ...'
 			equip.save()
 		except:
@@ -70,7 +70,7 @@ def EquipOff(request, client_id, equipamento_id):
 	connection = ModbusTcpClient(equip.clp.ip_int, equip.clp.port)
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		try:
-			conecction.write_register(equip.end_modbus_escrita, 0)
+			connection.write_register(equip.end_modbus_escrita, 0)
 			equip.status = 'Desligando ...'
 			equip.save()
 		except:
