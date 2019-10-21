@@ -124,7 +124,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 
-
 # This should already be in your settings.py
 django_heroku.settings(locals())
 # This is new
