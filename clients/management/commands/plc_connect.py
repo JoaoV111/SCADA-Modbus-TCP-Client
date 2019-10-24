@@ -17,7 +17,7 @@ class Command(BaseCommand):
         clp = CLP.objects.get(name=clp_name)
         connection = (ModbusTcpClient(clp.ip_ext, clp.port))
         while True:
-            print(f'({timezone.now().strftime("%X")})\033[1;34mTryin to connect to {connection} ...\033[m')
+            print(f'({timezone.now().strftime("%X")})\033[1;34mTryin to connect to {clp.name} ...\033[m')
             if connection.connect():
                 try:
                     result = connection.read_holding_registers(0, 50)
