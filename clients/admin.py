@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Equipamento, CLP, Client
+from .models import Equipamento, CLP, Client, Value
 from django.db.models import Q
 
 
@@ -42,3 +42,4 @@ class TransactionAdmin(admin.ModelAdmin):
 admin.site.register(Client)
 admin.site.register(CLP)
 admin.site.register(Equipamento, TransactionAdmin)
+admin.site.register(Value)

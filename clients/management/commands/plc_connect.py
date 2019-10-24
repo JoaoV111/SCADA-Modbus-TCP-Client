@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from clients.models import Equipamento, CLP, Client
+from clients.models import Equipamento, CLP, Client, Value
 from pymodbus.client.sync import ModbusTcpClient
 from clients.views import is_PLC_socket_close
 import time
@@ -19,12 +19,25 @@ class Command(BaseCommand):
         while True:
             print(f'({timezone.now().strftime("%X")})\033[1;34mTryin to connect to {connection} ...\033[m')
             if connection.connect():
-                result = connection.read_holding_registers(0, 50)
-                equips = clp.equipamento_set.all() 
-                for equip in equips:
-                    print(f'{result.registers[equip.end_modbus_leitura]}')
-                is_PLC_socket_close(connection)
-                print(f'\033[1;32m -OK!\033[m')
+                try:
+                    result = connection.read_holding_registers(0, 50)
+                    equips = clp.equipamento_set.all() 
+                    for equip in equips:
+                        try:
+                            data = clp.value_set.get(end=equip.end_modbus_leitura)
+                            data.value = result.registers[equip.end_modbus_leitura]
+                            data.date = timezone.now()
+                            data.save()
+                        except:
+                            clp.value_set.create(end=equip.end_modbus_leitura,
+                                                value=(result.registers[equip.end_modbus_leitura]),
+                                                date=timezone.now())
+
+                    is_PLC_socket_close(connection)
+                    print(f'\033[1;32m -OK!\033[m')
+                    time.sleep(1)
+                except:
+                    print('\033[1;31m -Error to read!\033[m')
             else:
                 print('\033[1;31m -Error to connect!\033[m')
 

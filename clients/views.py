@@ -16,7 +16,7 @@ def index(request):
 
 def clp_view(request,client_id):
 	client = get_object_or_404(Client, pk=client_id)
-	equip_list = client.equipamento_set.order_by('clp')
+	equip_list = client.equipamento_set.order_by('name')
 	clp_status = []
 	if request.user.is_authenticated and request.user.has_perm('clients.' + str(client_id)):
 		connection = ModbusTcpClient('0.0.0.0', 0)
@@ -31,10 +31,10 @@ def clp_view(request,client_id):
 				clp_status = list(set(clp_status))
 
 			try:
-				result = connection.read_holding_registers(equip.end_modbus_leitura, 1)
-				if result.registers[0] == 0:
+				data = equip.clp.value_set.get(end=equip.end_modbus_leitura)
+				if data.value == 0:
 					equip.status = 'Desligado'
-				elif result.registers[0] == 1:
+				elif data.value == 1:
 					equip.status = 'Ligado'
 				else:
 					equip.status = 'Erro de leitura'
