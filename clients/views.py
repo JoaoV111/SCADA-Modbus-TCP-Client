@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Equipamento, CLP, Client
+from clients.models import Equipamento, CLP, Client
 from pymodbus.client.sync import ModbusTcpClient
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User

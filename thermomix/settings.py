@@ -1,14 +1,7 @@
 import os
-import django_heroku
-import dj_database_url
-import dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -19,7 +12,7 @@ SECRET_KEY = '#pxf@p!=n-a2yrb@8wqkckxn0t49y+w5(^6%&$6qwa^npvq^al'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['modbus-tcp-client.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['modbus-tcp-client.herokuapp.com','localhost', 'scada.thermomix.ind.br']
 
 
 # Application definition
@@ -36,7 +29,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,8 +62,16 @@ WSGI_APPLICATION = 'thermomix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'scadadb',
+        'USER': 'thermomix',
+        'PASSWORD': '*thermom338*',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -117,14 +117,8 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/clients/'
 LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
-
-# This should already be in your settings.py
-django_heroku.settings(locals())
-# This is new
-del DATABASES['default']['OPTIONS']['sslmode']
