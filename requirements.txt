@@ -1,7 +1,7 @@
 amqp==2.5.1
 backcall==0.1.0
 billiard==3.5.0.5
-celery==4.0.2
+celery==5.2.2
 Click==7.0
 colorama==0.4.1
 decorator==4.4.0
